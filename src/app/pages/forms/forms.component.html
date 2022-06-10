@@ -1,0 +1,62 @@
+<app-header></app-header>
+
+<form class="row col-md-4 col-sm-12 mx-auto needs-validation" (ngSubmit)="onSubmit(datos)" #datos='ngForm' novalidate>
+  <label class="my-2">Predio sin servicio de gas - Id: {{id}}</label>
+  <div class="mb-3 my-1">
+    <input type="text" class="form-control" id="validationCustomEje"  [ngModel]="eje" name="Eje" placeholder="Eje vial" required>
+    <div class="valid-feedback">Ok! 👍</div>
+    <div class="invalid-feedback">Ingresa un Eje vial.  (ej: Calle 159)</div>
+  </div>
+  <div class="mb-3 my-1">
+    <input type="text" class="form-control" id="validationCustomDir"  [ngModel]="dir" name="Dir" placeholder="Dirección" required>
+    <div class="valid-feedback">Ok! 👍</div>
+    <div class="invalid-feedback">Ingresa una Dirección.  (ej: 8D - 36)</div>
+  </div>
+  <div class="mb-3 my-1">
+    <input type="number" class="form-control" id="validationCustomPred"  [ngModel]="predial"  name="Pred" placeholder="Unidades prediales"  required>
+    <div class="valid-feedback">Ok! 👍</div>
+    <div class="invalid-feedback">Ingresa las unidades prediales.  (ej: 1)</div>
+  </div>
+  <div class="mb-3 my-1">
+    <input type="text" class="form-control" id="validationCustomDest"  [ngModel]="destino" name="Dest" placeholder="Destino económico" required>
+    <div class="valid-feedback">Ok! 👍</div>
+    <div class="invalid-feedback">Ingresa un Destino económico.  (ej: Comercial)</div>
+  </div>
+  <div class="mb-3 my-1">
+    <input type="text" class="form-control" id="validationCustomAct"  [ngModel]="actividad" name="Act" placeholder="Actividad económica" required>
+    <div class="valid-feedback">Ok! 👍</div>
+    <div class="invalid-feedback">Ingresa un Actividad económica.  (ej: Restaurante)</div>
+  </div>
+  <div class="mb-3 my-1">
+    <input type="number" class="form-control" id="validationCustomEstr"  [ngModel]="estrato" name="Estr" placeholder="Estrato" required>
+    <div class="valid-feedback">Ok! 👍</div>
+    <div class="invalid-feedback">Ingresa un Estrato.  (ej: 1 - 6)</div>
+  </div>
+  <div class="row mx-0 px-0">
+    <div class="mb-3 col-6 my-2">
+      <input type="checkbox" class="form-check-input" [ngModel]="false" name="energiacheck">
+      <label class="form-check-label" for="exampleCheck1"> Medidores de energía</label>
+    </div>
+    <div class="mb-3 col-6">
+      <input type="number" class="form-control mb-3 col-6" id="exampleInputPsswd1" [ngModel]="energia" name="energia" placeholder="Cantidad">
+    </div>
+    <div class="mb-3 col-6 my-2">
+      <input type="checkbox" class="form-check-input" [ngModel]="false" name="gascheck">
+      <label class="form-check-label" for="exampleCheck1"> Medidores de gas</label>
+    </div>
+    <div class="mb-3 col-6">
+      <input type="number" class="form-control mb-3 col-6" id="exampleInputPsswd1"  [ngModel]="gas" name="gas" placeholder="Cantidad">
+    </div>
+    <div class="mb-3 col-6 my-2">
+      <input type="checkbox" class="form-check-input" [ngModel]="false" name="levancheck">
+      <label class="form-check-label" for="exampleCheck1"> Levantamiento</label>
+    </div>
+    <div class="mb-3 col-6">
+      <textarea class="form-control mb-3 col-6" id="exampleInputPsswd1"  [ngModel]="levantamiento" name="levan" placeholder="Descripción"></textarea>
+    </div>
+  </div>
+  <div>
+    <textarea class="form-control mb-3 col-6" id="exampleInputPsswd1" [ngModel]="descripcion" name="desc" placeholder="Observaciones"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary mx-auto col-4">Guardar</button>
+</form>

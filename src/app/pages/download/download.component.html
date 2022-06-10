@@ -1,0 +1,63 @@
+<div class="container-fluid">
+  <h1 class="display-4">Registros de Usuario</h1>
+  <hr>
+<form (ngSubmit)="onSubmit(datos)" #datos='ngForm'>
+<div class="row">
+  <div class="col">
+    <label for="exampleFormControlInput1" class="form-label">Localidad</label>
+    <input type="text" class="form-control" [(ngModel)]="localidad" name="localidad">
+  </div>
+  <div class="col">
+    <label for="exampleFormControlInput1" class="form-label">Fecha Inicio</label>
+    <input type="date" class="form-control" [(ngModel)]="fini" name="fini">
+  </div>
+  <div class="col">
+    <label for="exampleFormControlInput1" class="form-label">Fecha Fin</label>
+    <input type="date" class="form-control" [(ngModel)]="ffin" name="ffin"></div>
+  <div class="col d-grid">
+    <button type="submit" class="btn btn-primary mb-3">Filtrar por Fecha</button>
+    <button class="btn btn-primary" (click)="exportexcel()">Descargar</button>
+  </div>
+</div>
+</form>
+<div class="table-responsive mt-4">
+
+<table class="table table-striped" id="excel-table">
+  <thead>
+    <tr>
+      <th scope="col">Fecha</th>
+      <th scope="col">Código lote</th>
+      <th scope="col">Localidad</th>
+      <th scope="col">Eje</th>
+      <th scope="col">Direccion</th>
+      <th scope="col">Estrato</th>
+      <th scope="col">Un. Predial</th>
+      <th scope="col">Destino</th>
+      <th scope="col">Actividad</th>
+      <th scope="col">Med. Energia</th>
+      <th scope="col">Med. Gas</th>
+      <th scope="col">Levantamiento</th>
+      <th scope="col">Descripcion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let info of infoarray  | filterBy: ['localidad']: [localidad]">
+      <td>{{info.fecha | date:'medium'}}</td>
+      <td>{{info.codigo_lote}}</td>
+      <td>{{info.localidad}}</td>
+      <td>{{info.eje}}</td>
+      <td>{{info.direccion}}</td>
+      <td>{{info.estrato}}</td>
+      <td>{{info.predial}}</td>
+      <td>{{info.destino}}</td>
+      <td>{{info.actividad}}</td>
+      <td>{{info.energia}}</td>
+      <td>{{info.gas}}</td>
+      <td>{{info.levantamiento}}</td>
+      <td>{{info.descripcion}}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
