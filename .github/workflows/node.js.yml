@@ -22,7 +22,7 @@ jobs:
     - name: Instalando modulos de node
       run: |
         npm install
-        npm run-script deploy
+        npm run-script deploygit
     - name: Instalando en gh-pages
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
