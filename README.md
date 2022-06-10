@@ -25,4 +25,5 @@ Para obtener más ayuda sobre Angular CLI, use `ng help` o consulte [Angular CLI
 ## Realizado por:
 
 Jessica Tatiana Prieto González - 20211094019
+
 Andrés Felipe Mosquera Clavijo - 20211094012
