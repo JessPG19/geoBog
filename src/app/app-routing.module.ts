@@ -17,7 +17,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'newform/:loc/:id',
+    path: 'newform/:id',
     component: FormsComponent,
     canActivate: [AuthGuard],
   },

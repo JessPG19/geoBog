@@ -1,19 +1,43 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import { map  } from 'rxjs/operators';
 import * as moment from 'moment';
 @Injectable({
   providedIn: 'root'
 })
 export class RestService {
 
+  sharingData = {
+    id:"",
+    localidad:"",
+    eje_vial:"",
+    direccion:""
+  }
+
+  // Observable string source
+  private dataStringSource = new BehaviorSubject<Object>({});
+
+  // Observable string stream
+  dataString$ = this.dataStringSource.asObservable();
+
   constructor(private http: HttpClient) { }
+
+
+  public saveData(id:string, localidad:string, eje_vial?: string, direccion?:string){
+    this.sharingData.id = id;
+    this.sharingData.localidad = localidad;
+    if(eje_vial) this.sharingData.eje_vial = eje_vial;
+    if(direccion) this.sharingData.direccion = direccion;
+    this.dataStringSource.next(this.sharingData);
+  }
   postInfo(info: any) {
-    return this.http.post(`${environment.URL_DB}/Information.json`, info).pipe(
+    let res ={}
+    res[info.codigo_lote]=info
+    return this.http.patch(`${environment.URL_DB}/Information.json`, res).pipe(
       map((resp: any) => {
-        info.codigo_lote = resp.name;
-        return info;
+        return res;
       })
     );
   }
@@ -28,7 +52,6 @@ export class RestService {
       .get(`${environment.URL_DB}/Information.json`)
       .pipe(map(this.buildArrayInfo));
     }
-
   }
 
   private buildArrayInfoDate(info, finit, ffin) {
@@ -54,5 +77,10 @@ export class RestService {
       productos.push(info2);
     });
     return productos;
+  }
+
+  getInfobyId(id) {
+      return this.http
+      .get(`${environment.URL_DB}/Information/${id}.json`)
   }
 }

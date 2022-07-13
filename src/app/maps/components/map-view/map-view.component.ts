@@ -1,11 +1,14 @@
 import {Component, ElementRef, ViewChild, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 import * as L from 'leaflet';
+import { RestService } from 'src/app/services/rest.service';
 import {PlacesService} from '../../services/places.service';
 
 @Component({selector: 'app-map-view', templateUrl: './map-view.component.html', styleUrls: ['./map-view.component.css']})
 export class MapViewComponent implements OnInit {
 
   @ViewChild('mapDiv')
+  load = true
   mapDivElement !: ElementRef;
   map;
   mapLocation;
@@ -44,7 +47,8 @@ export class MapViewComponent implements OnInit {
   usaquen;
   usme;
 
-  constructor(private placesService : PlacesService) {}
+  constructor(private placesService : PlacesService, private _saveService : RestService,private router: Router) {}
+
   ngOnInit() {
     this.getLayersInfo();
     this.placesService.getLayers('localidades').subscribe(res => {
@@ -209,6 +213,7 @@ export class MapViewComponent implements OnInit {
       L.control.layers(basemaps, overlays).addTo(map);
       setTimeout(() => {
           map.panTo(new L.LatLng(this.placesService.useLocation[0], this.placesService.useLocation[1]));
+          this.load = false;
       }, 500);
   }
 
@@ -271,20 +276,35 @@ export class MapViewComponent implements OnInit {
   }
 
   message(layer) {
-    return `<h3>
-              ${layer.PDONVIAL} ${layer.PDOCINTERI ? layer.PDOCINTERI : ''} ${layer.PDOTEXTO}
-            </h3>
-            <span>Código Predio: ${layer.LOTCODIGO}</span>
-            <br/>
-            <span>Area: ${layer.Shape_Area} m^2</span>
-            <br/>
-            <span>
-            Coordenadas: [${layer.Coordena_1}N, ${layer.Coordenada}W]
-            </span>
-            <br/><br/>
-            <a href="newform/${layer.Nombre_de_}/${layer.LOTCODIGO}" target="_blank" class="mx-auto">
-            <button type="button" class="btn btn-primary">Formulario</button>
-            </a>`;
+    const dir = layer.PDOCINTERI ? layer.PDOCINTERI : '' + layer.PDOTEXTO;
+    const eje = layer.PDONVIAL
+    const idi = layer.LOTCODIGO
+    let div = document.createElement('div')
+    let h3 = document.createElement('h3')
+    h3.innerHTML =`${eje} ${dir}`
+
+    div.append(h3)
+    let span = document.createElement('span')
+    span.innerHTML =`Código Predio: ${idi}`
+    div.append(span)
+    let span1 = document.createElement('span')
+    span1.innerHTML =`Area: ${layer.Shape_Area} m`
+    div.append(document.createElement('br'))
+    div.append(span1)
+    let span2 = document.createElement('span')
+    span2.innerHTML =`Coordenadas: [${layer.Coordena_1}N, ${layer.Coordenada}W]`
+    div.append(document.createElement('br'))
+    div.append(span2)
+    div.append(document.createElement('br'))
+
+    let button = document.createElement('button')
+    button.className = "mx-auto mt-3 d-flex btn btn-primary"
+    button.innerHTML = "Formulario"
+    button.id = idi
+    button.onclick = ()=>this.saved(layer)
+    div.append(button)
+
+    return div;
   }
 
   messageLoc(propLoc) {
@@ -293,4 +313,14 @@ export class MapViewComponent implements OnInit {
             <span>Acto administrativo: ${propLoc.Acto_admini}</span>
             <br/><br/>`
   }
+  saved(layer){
+    const dir = layer.PDOCINTERI ? layer.PDOCINTERI : '' + layer.PDOTEXTO;
+    const eje = layer.PDONVIAL
+    const loc = layer.Nombre_de_
+    const idi = layer.LOTCODIGO
+    console.log(idi,loc,eje,dir,layer);
+    this._saveService.saveData(idi,loc,eje?.includes('null') ? '': eje,dir?.includes('null') ? '': dir);
+    this.router.navigate(['newform/'+layer.LOTCODIGO]);
+  }
+
 }

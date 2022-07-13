@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng serve",
+    "start": "ng serve",
     "build": "ng build",
-    "deploy": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --configuration production --base-href=https://geobog.themisapp.com.co/",
-    "deploygit": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --configuration production --base-href=https://jesspg19.github.io/geoBog/",
+    "deploy": "ng build --configuration production --base-href=https://geobog.themisapp.com.co/",
+    "deploygit": "ng build --configuration production --base-href=https://jesspg19.github.io/geoBog/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
